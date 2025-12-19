@@ -94,16 +94,22 @@ apiClient.interceptors.response.use(
     }
 
     if (error.response?.status === 401 || error.response?.status === 403) {
-      // 인증 실패 시 로그아웃 처리
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        // 현재 페이지가 로그인/회원가입 페이지가 아닐 때만 리다이렉트
-        if (
-          !window.location.pathname.includes('/login') &&
-          !window.location.pathname.includes('/register')
-        ) {
-          window.location.href = '/login';
+      // 게시글 조회 API는 공개적으로 접근 가능하므로 리다이렉트하지 않음
+      const url = error.config?.url || '';
+      const isPublicPostAPI = url.includes('/api/post') && error.config?.method === 'get';
+
+      if (!isPublicPostAPI) {
+        // 인증 실패 시 로그아웃 처리
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          // 현재 페이지가 로그인/회원가입 페이지가 아닐 때만 리다이렉트
+          if (
+            !window.location.pathname.includes('/login') &&
+            !window.location.pathname.includes('/register')
+          ) {
+            window.location.href = '/login';
+          }
         }
       }
     }

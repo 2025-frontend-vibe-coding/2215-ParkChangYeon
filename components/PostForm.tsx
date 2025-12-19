@@ -69,11 +69,13 @@ export default function PostForm({ initialData, postId, onSubmitSuccess }: PostF
           id="title"
           placeholder="제목을 입력하세요"
           {...register('title')}
-          className={`${errors.title ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'} rounded-lg`}
+          className={`${
+            errors.title
+              ? 'border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:ring-blue-500'
+          } rounded-lg`}
         />
-        {errors.title && (
-          <p className="text-sm text-red-500">{errors.title.message}</p>
-        )}
+        {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
       </div>
 
       <div className="space-y-2">
@@ -86,12 +88,12 @@ export default function PostForm({ initialData, postId, onSubmitSuccess }: PostF
           rows={15}
           {...register('body')}
           className={`w-full px-3 py-2 border rounded-lg resize-none focus:outline-none focus:ring-2 ${
-            errors.body ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
+            errors.body
+              ? 'border-red-500 focus:ring-red-500'
+              : 'border-gray-300 focus:ring-blue-500'
           }`}
         />
-        {errors.body && (
-          <p className="text-sm text-red-500">{errors.body.message}</p>
-        )}
+        {errors.body && <p className="text-sm text-red-500">{errors.body.message}</p>}
       </div>
 
       <Button
@@ -104,4 +106,3 @@ export default function PostForm({ initialData, postId, onSubmitSuccess }: PostF
     </form>
   );
 }
-

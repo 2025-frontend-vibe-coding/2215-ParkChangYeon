@@ -40,7 +40,7 @@ export default function PostList() {
       } catch (error: unknown) {
         if (isMounted) {
           if (error instanceof Error) {
-            // 403 에러는 인터셉터에서 처리하므로 여기서는 알림만 표시하지 않음
+            // 403 에러는 공개 API이므로 조용히 처리 (로그인 없이도 조회 가능)
             if (!error.message.includes('403') && !error.message.includes('Forbidden')) {
               alert('게시글 목록을 불러오는데 실패했습니다.');
             }
@@ -74,6 +74,7 @@ export default function PostList() {
         }
       } catch (error: unknown) {
         if (error instanceof Error) {
+          // 403 에러는 공개 API이므로 조용히 처리 (로그인 없이도 조회 가능)
           if (!error.message.includes('403') && !error.message.includes('Forbidden')) {
             alert('게시글 목록을 불러오는데 실패했습니다.');
           }

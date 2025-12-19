@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/lib/hooks';
@@ -10,12 +9,7 @@ import { Button } from '@/components/ui/button';
 export default function Header() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -32,7 +26,7 @@ export default function Header() {
             </span>
           </Link>
           <div className="flex items-center space-x-3">
-            {mounted && isAuthenticated ? (
+            {isAuthenticated ? (
               <Button
                 onClick={handleLogout}
                 variant="outline"
@@ -51,9 +45,7 @@ export default function Header() {
                   </Button>
                 </Link>
                 <Link href="/register">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                    회원가입
-                  </Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">회원가입</Button>
                 </Link>
               </>
             )}
@@ -63,4 +55,3 @@ export default function Header() {
     </header>
   );
 }
-

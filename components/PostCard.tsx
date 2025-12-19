@@ -62,6 +62,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
       alert('작성자만 수정할 수 있습니다.');
       return;
     }
+    confirm('수정하시겠습니까?');
     router.push(`/posts/edit/${post.id}`);
   };
 
