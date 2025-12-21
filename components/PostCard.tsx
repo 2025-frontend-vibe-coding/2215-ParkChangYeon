@@ -69,12 +69,10 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
   return (
     <Card className="p-6 hover:shadow-md transition-all duration-300 group border border-gray-100 bg-white rounded-xl">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <Link href={`/posts/${post.id}`}>
-            <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-3 line-clamp-2">
-              {post.title}
-            </h3>
-          </Link>
+        <Link href={`/posts/${post.id}`} className="flex-1 min-w-0">
+          <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-3 line-clamp-2">
+            {post.title}
+          </h3>
           <div className="flex items-center gap-4 text-sm text-gray-500 mt-3">
             <div className="flex items-center gap-1">
               <span className="font-medium text-gray-700">{post.username}</span>
@@ -84,7 +82,7 @@ export default function PostCard({ post, onDelete }: PostCardProps) {
               <span>{post.view}</span>
             </div>
           </div>
-        </div>
+        </Link>
         {isAuthor && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -41,9 +41,11 @@ export default function PostList() {
         if (isMounted) {
           if (error instanceof Error) {
             // 403 에러는 공개 API이므로 조용히 처리 (로그인 없이도 조회 가능)
+            // 백엔드 설정 문제일 수 있으므로 에러 메시지만 표시하지 않음
             if (!error.message.includes('403') && !error.message.includes('Forbidden')) {
               alert('게시글 목록을 불러오는데 실패했습니다.');
             }
+            // 403 에러인 경우에도 posts는 빈 배열로 유지 (게시글이 없다고 표시)
           }
         }
       } finally {

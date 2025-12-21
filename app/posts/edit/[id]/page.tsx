@@ -63,8 +63,20 @@ export default function EditPostPage() {
           return;
         }
 
-        // 작성자 확인 후 게시글 상세 정보 가져오기
-        const response = await postAPI.getPost(postId);
+        // 작성자 확인 후 게시글 상세 정보 가져오기 (조회수 증가 없이)
+        // 백엔드에 /edit 엔드포인트가 없으면 기존 API 사용
+        let response;
+        try {
+          response = await postAPI.getPostForEdit(postId);
+        } catch (editError) {
+          // /edit 엔드포인트가 없거나 500 에러면 기존 API 사용 (조회수 증가는 감수)
+          if (axios.isAxiosError(editError) && editError.response?.status === 500) {
+            response = await postAPI.getPost(postId);
+          } else {
+            throw editError;
+          }
+        }
+
         if (response.success && response.data) {
           setPostData(response.data);
         }

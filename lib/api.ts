@@ -111,6 +111,11 @@ apiClient.interceptors.response.use(
             window.location.href = '/login';
           }
         }
+      } else {
+        // 게시글 조회 API의 403 에러는 조용히 처리 (백엔드 설정 문제일 수 있음)
+        // 에러 메시지를 덜 공격적으로 변경
+        const customError = new Error('게시글을 불러올 수 없습니다. 백엔드 설정을 확인해주세요.');
+        return Promise.reject(customError);
       }
     }
 
@@ -148,6 +153,11 @@ export const postAPI = {
   },
 
   getPost: async (id: number): Promise<ApiResponse<PostDetailDTO>> => {
+    const response = await apiClient.get<ApiResponse<PostDetailDTO>>(`/api/post/${id}`);
+    return response.data;
+  },
+
+  getPostForEdit: async (id: number): Promise<ApiResponse<PostDetailDTO>> => {
     const response = await apiClient.get<ApiResponse<PostDetailDTO>>(`/api/post/${id}`);
     return response.data;
   },
